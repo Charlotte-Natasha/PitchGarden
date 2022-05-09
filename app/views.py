@@ -4,5 +4,11 @@ from .forms import Signup
 
 @app.route('/')
 def index():
+    '''
+    View root page function that returns the index page and its data
+    '''
+    return render_template('index.html')
+
+    
     signup_form= Signup()
-    return render_template('index.html', form=signup_form)
+    return render_template('signup.html', form=signup_form)
