@@ -10,10 +10,12 @@ def index():
     '''
     return render_template('index.html')
 
-@app.route("/login")
+@app.route("/login", methods=['POST', 'GET'])
 def login():
-    login
-    return render_template('login.html', form=LogIn)
+    login_form = LogIn
+    # if login_form.validate_on_submit():
+    #     return redirect(url_for('index'))
+    return render_template('login.html', form=login_form)
 
 @app.route("/sign-up", methods=['POST', 'GET'])
 def sign_up():
