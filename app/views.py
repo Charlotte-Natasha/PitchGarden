@@ -12,16 +12,20 @@ def index():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
-    login_form = LogIn
-    # if login_form.validate_on_submit():
-    #     return redirect(url_for('index'))
-    return render_template('login.html', form=login_form)
+    form=LogIn()
+    if form.validate_on_submit():
+        return redirect(url_for('pitch'))
+    return render_template('login.html', form=form)
 
 @app.route("/sign-up", methods=['POST', 'GET'])
 def sign_up():
     signup_form = Signup()
     if signup_form.validate_on_submit():
-        return redirect(url_for('index'))
+        return redirect(url_for('pitch'))
     return render_template("signup.html", form=signup_form)  
     # signup_form= Signup()
     # return render_template('signup.html', form=signup_form)
+
+@app.route("/pitch")
+def pitch():
+    return render_template('pitch.html')    
