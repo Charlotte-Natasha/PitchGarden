@@ -1,6 +1,3 @@
-from distutils.command.config import config
-
-
 class Config:
     SECRET_KEY= '0725932962'
 
