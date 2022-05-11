@@ -5,6 +5,7 @@ class ProdConfig(Config):
     """"""
     
 class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI='postgresql://password@hostname:port/databasename'
     DEBUG = True
 
 config_options = {

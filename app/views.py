@@ -22,8 +22,7 @@ def sign_up():
 def login():
     form=LogIn()
     if form.validate_on_submit():
-        
-        if form.username.data=='tasha' and form.  password.data=='123456':
+        if form.username.data=='tasha' and form.password.data=='123456':
             flash(f'Login success for {form.username  .data}', category='success')    
             return redirect(url_for('pitch'))  
         else:  
@@ -34,3 +33,7 @@ def login():
 @app.route("/pitch")
 def pitch():
     return render_template('pitch.html')    
+
+@app.route("/logout")
+def logout():
+    return redirect('index.html')
