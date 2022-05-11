@@ -1,3 +1,4 @@
+from flask_login import logout_user
 from app import app,db
 from flask import redirect, render_template, url_for, redirect, flash
 from .forms import LogIn, Signup
@@ -9,6 +10,10 @@ def index():
     View root page function that returns the index page and its data
     '''
     return render_template('index.html')
+
+@app.route("/laugh")
+def laugh():
+    return render_template('laugh.html')      
 
 @app.route("/sign-up", methods=['POST', 'GET'])
 def sign_up():
@@ -22,7 +27,7 @@ def sign_up():
 def login():
     form=LogIn()
     if form.validate_on_submit():
-        if form.username.data=='tasha' and form.password.data=='123456':
+        if form.username.data=='' and form.password.data=='':
             flash(f'Login success for {form.username  .data}', category='success')    
             return redirect(url_for('pitch'))  
         else:  
@@ -36,4 +41,5 @@ def pitch():
 
 @app.route("/logout")
 def logout():
-    return redirect('index.html')
+    logout_user()
+    return redirect(url_for('index.html'))
