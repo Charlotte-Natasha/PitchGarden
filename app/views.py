@@ -22,13 +22,14 @@ def sign_up():
 def login():
     form=LogIn()
     if form.validate_on_submit():
+        
         if form.username.data=='tasha' and form.  password.data=='123456':
             flash(f'Login success for {form.username  .data}', category='success')    
             return redirect(url_for('pitch'))  
         else:  
             flash(f'Login unsuccessfull {form.username.data}', category='danger')    
             return redirect(url_for('index'))
-    return render_template('login.html', form=form)    
+    return render_template('login.html', form=LogIn)    
 
 @app.route("/pitch")
 def pitch():
