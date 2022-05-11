@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,EmailField,SubmitField
 from wtforms.validators import DataRequired,Length,EqualTo,Email
+from flask import Blueprint
+
+forms = Blueprint('forms', __name__)
 
 class Signup(FlaskForm):
     username = StringField(label='Enter username', validators=[DataRequired(),Length(min=3,max=20)])

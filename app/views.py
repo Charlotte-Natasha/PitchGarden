@@ -1,7 +1,11 @@
-from flask_login import logout_user
+from flask_login import logout_user,login_user
 from app import app,db
-from flask import redirect, render_template, url_for, redirect, flash
+from flask import redirect, render_template, url_for, redirect, flash, request
 from .forms import LogIn, Signup
+from .model import User
+from flask import Blueprint
+
+views = Blueprint('views', __name__)
 
 @app.route('/')
 @app.route('/home')
@@ -27,12 +31,13 @@ def sign_up():
 def login():
     form=LogIn()
     if form.validate_on_submit():
-        if form.username.data=='' and form.password.data=='':
-            flash(f'Login success for {form.username  .data}', category='success')    
-            return redirect(url_for('pitch'))  
-        else:  
-            flash(f'Login unsuccessfull {form.username.data}', category='danger')    
-            return redirect(url_for('index'))
+        user=User.query.filter_by(username = form.username.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user,form.remember.data)
+            return redirect(request.args.get('next') or url_for('main.index'))
+
+        flash('Invalid username or Password')
+        
     return render_template('login.html', form=LogIn)    
 
 @app.route("/pitch")
