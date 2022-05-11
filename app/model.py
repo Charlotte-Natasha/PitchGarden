@@ -13,4 +13,3 @@ class User(db.Model):
         return f'{self.username}: {self.email}: {self.date_created}'
 
 
-# db.String(20)nullable=False,default='default.jpg'

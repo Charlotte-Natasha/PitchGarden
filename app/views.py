@@ -1,4 +1,4 @@
-from app import app
+from app import app,db
 from flask import redirect, render_template, url_for, redirect, flash
 from .forms import LogIn, Signup
 
