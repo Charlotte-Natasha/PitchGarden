@@ -4,8 +4,6 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import login_manager
 
-# login_manager = LoginManager()
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -15,10 +13,10 @@ class User(db.Model,UserMixin):
     __tablename__ = 'users'
 
     id=db.Column(db.Integer,primary_key=True)
-    username=db.Column(db.String(20),unique=True,nullable=False)
-    email=db.Column(db.String(120),unique=True,nullable=False)
-    image_file=db.Column(db.String(20),nullable=False,default='default.jpg')
-    password_hash=db.Column(db.String(20),nullable=False)
+    username=db.Column(db.String(255),unique=True,nullable=False)
+    email=db.Column(db.String(255),unique=True,nullable=False)
+    image_file=db.Column(db.String(255),nullable=False,default='default.jpg')
+    password_hash=db.Column(db.String,nullable=False)
     date_created=db.Column(db.DateTime,default=datetime.utcnow)
 
     @property
@@ -40,14 +38,14 @@ class Pitch(db.Model):
     __tablename__ = 'pitches'
 
     id=db.Column(db.Integer,primary_key=True)
-    title=db.Column(db.String(20),nullable=False)
-    post=db.Column(db.text())
-    comment=db.Column(db.relationship('Comment',backref='pitch',lazy='dynamic'))
-    upvote=db.Column(db.relationship('Upvote',backref='pitch',lazy='dynamic'))
-    downvote=db.Column(db.relationship('Downvote',backref='pitch',lazy='dynamic'))
-    user_id=db.Column(db.Integer,db.ForeignKey('user.id'))
-    image_file=db.Column(db.String(20),nullable=False,default='default.jpg')
-    date_created=db.Column(db.DateTime,default=datetime.utcnow)
+    title=db.Column(db.String(255),nullable=False)
+    post=db.Column(db.Text())
+    comments=db.relationship('Comment',backref='comments',lazy='dynamic')
+    upvote=db.relationship('Upvote',backref='pitch',lazy='dynamic')
+    downvote=db.relationship('Downvote',backref='pitch',lazy='dynamic')
+    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    image_file=db.Column(db.String(255),nullable=False,default='default.jpg')
+    # date_created=db.Column(db.DateTime,default=datetime.utcnow)
 
     def save_pitch(self):
         db.session.add(self)
@@ -61,14 +59,14 @@ class Comment(db.Model):
 
     id=db.Column(db.Integer,primary_key=True)
     comment=db.Column(db.Text(),nullable=False)
-    user_id=db.column(db.Integer,db.ForeignKey('user.id'))
-    pitch_id=db.column(db.Integer,db.ForeignKey('pitches.id'),nullable=False)
+    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    pitch_id=db.Column(db.Integer,db.ForeignKey('pitches.id'),nullable=False)
 
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
 
-    @classmethod
+    @classmethod 
     def get_comments(cls,id):
         comments=Comment.query.filter_by(id=id).all()
         return comments   
@@ -80,8 +78,8 @@ class Upvote(db.Model):
     __tablename__='upvotes'
 
     id=db.Column(db.Integer,primary_key=True)
-    user_id=db.column(db.Integer,db.ForeignKey('user.id'))
-    pitch_id=db.column(db.Integer,db.ForeignKey('pitches.id'))
+    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    pitch_id=db.Column(db.Integer,db.ForeignKey('pitches.id'))
 
     def save(self):
         db.session.add(self)
@@ -98,8 +96,8 @@ class Downvote(db.Model):
     __tablename__='downvotes'
 
     id=db.Column(db.Integer,primary_key=True)
-    user_id=db.column(db.Integer,db.ForeignKey('user.id'))
-    pitch_id=db.column(db.Integer,db.ForeignKey('pitches.id'))
+    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    pitch_id=db.Column(db.Integer,db.ForeignKey('pitches.id'))
 
     def save(self):
         db.session.add(self)

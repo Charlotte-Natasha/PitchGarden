@@ -3,23 +3,27 @@ from .config import config_options
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-login_manager = LoginManager
+login_manager = LoginManager()
+
+db = SQLAlchemy()
 # flask instance
-app = Flask(__name__)
-app.config.from_object(config_options['dev'])
-# app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database/pitch.db'
-
-db=SQLAlchemy(app)
-
-#Initializing application
-login_manager.init_app()
-db.init_app(app)
-
-#Registering blueprints
-from .views import views as view_blueprint
-app.register_blueprint(view_blueprint)
-
-from .forms import forms as forms_blueprint
-app.register_blueprint(forms_blueprint)
 
 
+def create_app(config_name):
+
+    app = Flask(__name__)
+    app.config.from_object(config_options[config_name])
+    # app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database/pitch.db'
+
+    #Initializing application
+    db.init_app(app)
+    login_manager.init_app(app)
+
+    #Registering blueprints
+    from .main import main_blueprint
+    app.register_blueprint(main_blueprint)
+
+    with app.app_context():
+        db.create_all()
+
+    return app

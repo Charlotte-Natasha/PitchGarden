@@ -1,2 +1,79 @@
 {%extends 'base.html'%}
-<title>{% block title%} Log In {%endblock%}</title>
+<title>{% block title%} Laughter Gallery {%endblock%}</title>
+
+{%block content%}
+<div class="container-fluid">
+    <h3 class="text-center text-capitalize"> Laughter Gallery </h3>
+    <div class="row row-cols-1 row-cols-2 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100">
+                <div class="d-flex justify-content-center">
+                    <img src="" style="width: 18rem;" class="card-img-top" alt="">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center"></h5>
+                    <p>“Hey, my name’s Microsoft. Can I crash at your place tonight?” </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="d-flex justify-content-center">
+                    <img src="" style="width: 10rem;" class="card-img-top" alt="">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center"></h5>
+                    <p class="card-text">Are you religious? Because you’re the answer to all my prayers.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="d-flex justify-content-center">
+                    <img src="" style="width: 10rem;" class="card-img-top" alt="">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center"></h5>
+                    <p class="card-text">Can I follow you home? Cause my parents always told me to follow my dreams.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-2 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100">
+                <div class="d-flex justify-content-center">
+                    <img src="{{url_for('static', filename='images/grdn.png')}}" style="width: 18rem;" class="card-img-top" alt="">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center"></h5>
+                    <p>“Did you just come out of the oven? Because you’re hot.”</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="d-flex justify-content-center">
+                    <img src="" style="width: 10rem;" class="card-img-top" alt="">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center"></h5>
+                    <p class="card-text">“Baby, if you were words on a page, you’d be fine print.”.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="d-flex justify-content-center">
+                    <img src="" style="width: 10rem;" class="card-img-top" alt="">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center"></h5>
+                    <p class="card-text">“Are you related to Jean-Claude Van Damme? Because Jean-Claude Van Damme you’re sexy!”</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+    {%endblock%}
